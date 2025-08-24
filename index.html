@@ -11,8 +11,8 @@
         <header>
             <nav>
                 <div class="nav-link"><a href="">about</a></div>
-                <h1>I'm looking for</h1>
-                <div class="nav-link"><a href="">submit</a></div>
+                <h1>I'm looking for...</h1>
+                <div class="nav-link"><a href="https://docs.google.com/forms/d/e/1FAIpQLScubqktVRJgarFkZlDHZNBTv2FiT570SXuylHOjmCznmy71Rg/viewform">submit</a></div>
             </nav>
             <div id="nav-filters">
                 <input type="checkbox" id="filter-She" name="filter-She" checked="">
@@ -41,51 +41,36 @@
         <!-- <section id="about">
             <div class="exit">x</div>
             <p>This is sophies about section. This is sophies about section. This is sophies about section. This is sophies about section.</p>
-        </section>
-         -->
+        </section> -->
+        
 
-         <section id="profiles">
+         <section id="people" class="profiles">
 
          </section>
-        <section>
-            <article class="profile-card available">
-                <figure>
-                    <img src="https://d2w9rnfcy7mm78.cloudfront.net/37438035/original_80c0a6d6447c8217c555d40f6e039488.jpg?1749939745?bc=0" alt="">
-                </figure>
-                <figcaption>
-                    <p class="profile-name">Lauryn</p>
-                    <p class="profile-age">47</p>
-                    <p class="profile-pronoun">She/Her They/Them</p>
-                    <p class="profile-orientation">Gay</p>
-                    <p class="profile-seeking">I'm looking for... people who want to go on dates with me who are femme identified dykes over 30.</p>
-                    <p class="profile-availability">Taken? No</p>
-                </figcaption>
-                <button class="profile-contact">
-                    <a href="">Contact</a>
-                </button>
-            </article>
 
-            <article class="profile-card taken">
-                <figure>
-                    <p class="taken-heart">♡</p>
-                    <img src="https://d2w9rnfcy7mm78.cloudfront.net/37438035/original_80c0a6d6447c8217c555d40f6e039488.jpg?1749939745?bc=0" alt="">
-                </figure>
-                <figcaption>
-                    <p class="profile-name">Sam Sklar</p>
-                    <p class="profile-age">30</p>
-                    <p class="profile-pronoun">He/Him</p>
-                    <p class="profile-seeking">I'm looking for... dating and occasional hookups.</p>
-                    <p class="profile-availability">Taken? Yes</p>
-                </figcaption>
-                <button class="profile-contact">
-                    <a href="">Contact</a>
-                </button>
-            </article>
-        </section>
     </main>
 
 
         <script>
+
+              //Filtering Checkboxes Code
+              document.addEventListener('DOMContentLoaded', function() {
+                    const toggleCheckbox = document.getElementById('nav-filters');
+                    const divsToToggle = document.querySelectorAll('.Bi, .Taken, .Gay'); // Select all divs with these classes
+
+                    toggleCheckbox.addEventListener('change', function() {
+                        if (this.checked) {
+                        divsToToggle.forEach(div => {
+                            div.style.display = 'block'; // Or 'flex', 'grid', etc., depending on desired layout
+                        });
+                        } else {
+                        divsToToggle.forEach(div => {
+                            div.style.display = 'none';
+                        });
+                        }
+                    });
+                });
+
             const API =
               "https://script.google.com/macros/s/AKfycbyhEg9C9MATypfeNQWdjZXoZznzg-RJHSC6n3J_J6xF7F1UglXf1mSongSI1F9OI2c_-w/exec";
       
@@ -97,15 +82,17 @@
             // Create profile card element
             function createProfileCard(row) {
               const div = document.createElement("div");
-              div.className = `profile-card ${row.profile-availability}`;
+              div.className = `profile-card ${row.Orientations} ${row.Availability}`;
       
               const template = [
                 ["img", { src: row.Photo }],
-                ["p", { className: "profile-name", textContent: row.Brand }],
-                ["p", { className: "profile-age", textContent: row.Type }],
-                [ "p", { className: "profile-pronoun", textContent: `Pronouns: ${row["profile-pronoun"]}`, },],
+                ["p", { className: "profile-name", textContent: row.Name }],
+                ["p", { className: "profile-age", textContent: row.Age }],
+                ["p", { className: "profile-orientation", textContent: row.Orientation }],
+                ["p", { className: "profile-pronouns", textContent: row.Pronouns }],
                 ["p", { className: "profile-seeking",  textContent: `I'm looking for... ${row["profile-seeking"]}`, }, ],
-                ["p", { className: "profile-availibility", textContent: `Availability: ${row["profile-availibility"]}` }],
+                ["p", { className: "profile-availibility", textContent: row.Availability }],
+                ["p", { className: "profile-contact", textContent: `Email → ${row["Contact"]}`, }, ],
               ];
               
       
@@ -135,7 +122,7 @@
             fetch(API)
               .then((res) => res.json())
               .then(({ data }) => {
-                const container = document.querySelector(".misc");
+                const container = document.querySelector(".profiles");
                 const fragment = document.createDocumentFragment();
       
                 for (const row of data[0].children) {
@@ -143,9 +130,13 @@
                 }
       
                 container.appendChild(fragment);
-                organizeItemsByType();
+                // organizeItemsByType();
               })
               .catch((err) => console.error("Error fetching API:", err));
+
+
+
+              
           </script>
 
 </body>
