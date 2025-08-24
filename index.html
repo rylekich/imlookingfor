@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>i'm looking for...</title>
+</head>
+<body>
+    <main>
+        <header>
+            <nav>
+                <div class="nav-link"><a href="">about</a></div>
+                <h1>I'm looking for</h1>
+                <div class="nav-link"><a href="">submit</a></div>
+            </nav>
+            <div id="nav-filters">
+                <input type="checkbox" id="filter-She" name="filter-She" checked="">
+                <label for="filter-She">She/Her</label>
+                <input type="checkbox" id="filter-He" name="filter-He" checked="">
+                <label for="filter-He">He/Him</label>
+                <input type="checkbox" id="filter-They" name="filter-They" checked="">
+                <label for="filter-They">They/Them</label>
+                <input type="checkbox" id="filter-Gay" name="filter-Gay" checked="">
+                <label for="filter-Gay">Gay</label>
+                <input type="checkbox" id="filter-Lesbian" name="filter-Lesbian" checked="">
+                <label for="filter-Lesbian">Lesbian</label>
+                <input type="checkbox" id="filter-Queer" name="filter-Queer" checked="">
+                <label for="filter-Queer">Queer</label>
+                <input type="checkbox" id="filter-Bisexual" name="filter-Bisexual" checked="">
+                <label for="filter-Bisexual">Bisexual</label>
+                <input type="checkbox" id="filter-Straight" name="filter-Straight" checked="">
+                <label for="filter-Straight">Straight</label>
+                <input type="checkbox" id="filter-Available" name="filter-Available" checked="">
+                <label for="filter-Available">Available</label>
+                <input type="checkbox" id="filter-Taken" name="filter-Taken" checked="">
+                <label for="filter-Taken">Taken</label>                
+            </div>
+        </header>
+
+        <section id="about">
+            <div class="exit">x</div>
+            <p>This is sophies about section. This is sophies about section. This is sophies about section. This is sophies about section.</p>
+        </section>
+        
+        <section>
+            <article class="profile-card available">
+                <figure>
+                    <img src="https://d2w9rnfcy7mm78.cloudfront.net/37438035/original_80c0a6d6447c8217c555d40f6e039488.jpg?1749939745?bc=0" alt="">
+                </figure>
+                <figcaption>
+                    <p class="profile-name">Lauryn</p>
+                    <p class="profile-age">47</p>
+                    <p class="profile-pronoun">She/Her They/Them</p>
+                    <p class="profile-orientation">Gay</p>
+                    <p class="profile-seeking">I'm looking for... people who want to go on dates with me who are femme identified dykes over 30.</p>
+                    <p class="profile-availability">Taken? No</p>
+                </figcaption>
+                <button class="profile-contact">
+                    <a href="">Contact</a>
+                </button>
+            </article>
+
+            <article class="profile-card taken">
+                <figure>
+                    <p class="taken-heart">♡</p>
+                    <img src="https://d2w9rnfcy7mm78.cloudfront.net/37438035/original_80c0a6d6447c8217c555d40f6e039488.jpg?1749939745?bc=0" alt="">
+                </figure>
+                <figcaption>
+                    <p class="profile-name">Sam Sklar</p>
+                    <p class="profile-age">30</p>
+                    <p class="profile-pronoun">He/Him</p>
+                    <p class="profile-seeking">I'm looking for... dating and occasional hookups.</p>
+                    <p class="profile-availability">Taken? Yes</p>
+                </figcaption>
+                <button class="profile-contact">
+                    <a href="">Contact</a>
+                </button>
+            </article>
+        </section>
+    </main>
+
+
+        <script>
+            const API =
+              "https://script.google.com/macros/s/AKfycbzBNL_Lgc1E6n8mfmkldYMMkHFoLfLtPn9wm9jLjZkeSG71dSz8i8yEAUXZOTFWKICuWA/exec";
+      
+            // // Mapping of clothing types to their corresponding section IDs
+            // const TYPE_TO_SECTION = {
+            //   Hat: "head",
+            //   Dress: "dresses",
+            //   Sweater: "sweaters",
+            //   Top: "shoulders",
+            //   Bottom: "knees",
+            //   Shoes: "toes",
+            //   Outerwear: "outerwear",
+            // };
+      
+            // Create profile card element
+            function createProfileCard(row) {
+              const div = document.createElement("div");
+              div.className = `profile-card ${row.Type}`;
+      
+              const template = [
+                ["img", { src: row.Photo }],
+                ["p", { className: "profile-name", textContent: row.Brand }],
+                ["p", { className: "profile-age", textContent: row.Type }],
+                [ "p", { className: "profile-pronoun", textContent: `Pronouns: ${row["profile-pronoun"]}`, },],
+                ["p", { className: "profile-seeking",  textContent: `I'm looking for... ${row["profile-seeking"]}`, }, ],
+                ["p", { className: "profile-availibility", textContent: `Availability: ${row["profile-availibility"]}` }],
+              ];
+      
+              for (const [tag, props] of template) {
+                const el = document.createElement(tag);
+                Object.assign(el, props);
+                div.appendChild(el);
+              }
+      
+              return div;
+            }
+      
+            // Organize clothing items into their sections
+            function organizeItemsByType() {
+              for (const [type, sectionId] of Object.entries(TYPE_TO_SECTION)) {
+                const section = document.getElementById(sectionId);
+                if (!section) continue;
+      
+                const items = document.querySelectorAll(`.item.${type}`);
+                for (const item of items) {
+                  section.appendChild(item);
+                }
+              }
+            }
+      
+            // Main
+            fetch(API)
+              .then((res) => res.json())
+              .then(({ data }) => {
+                const container = document.querySelector(".misc");
+                const fragment = document.createDocumentFragment();
+      
+                for (const row of data[0].children) {
+                  fragment.appendChild(createClothingItem(row));
+                }
+      
+                container.appendChild(fragment);
+                organizeItemsByType();
+              })
+              .catch((err) => console.error("Error fetching API:", err));
+          </script>
+
+</body>
+</html>
