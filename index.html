@@ -7,41 +7,44 @@
     <title>i'm looking for...</title>
 </head>
 <body>
+    
     <main>
         <header>
             <nav>
-                <div class="nav-link"><a href="">about</a></div>
-                <h1>I'm looking for...</h1>
+                <div id="aboutlink" class="nav-link">about</div>
+                <h1>I’m looking for...</h1>
                 <div class="nav-link"><a href="https://docs.google.com/forms/d/e/1FAIpQLScubqktVRJgarFkZlDHZNBTv2FiT570SXuylHOjmCznmy71Rg/viewform">submit</a></div>
             </nav>
             <div id="nav-filters">
-                <input type="checkbox" id="filter-She" name="filter-She" checked="">
+                <input type="checkbox" id="filter-She" name="filter-She" value="She" checked="">
                 <label for="filter-She">She/Her</label>
-                <input type="checkbox" id="filter-He" name="filter-He" checked="">
+                <input type="checkbox" id="filter-He" name="filter-He" value="He" checked="">
                 <label for="filter-He">He/Him</label>
-                <input type="checkbox" id="filter-They" name="filter-They" checked="">
+                <input type="checkbox" id="filter-They" name="filter-They" value="They" checked="">
                 <label for="filter-They">They/Them</label>
-                <input type="checkbox" id="filter-Gay" name="filter-Gay" checked="">
+                <input type="checkbox" id="filter-Gay" name="filter-Gay" value="Gay" checked="">
                 <label for="filter-Gay">Gay</label>
-                <input type="checkbox" id="filter-Lesbian" name="filter-Lesbian" checked="">
+                <input type="checkbox" id="filter-Lesbian" name="filter-Lesbian" value="Lesbian" checked="">
                 <label for="filter-Lesbian">Lesbian</label>
-                <input type="checkbox" id="filter-Queer" name="filter-Queer" checked="">
+                <input type="checkbox" id="filter-Queer" name="filter-Queer" value="Queer" checked="">
                 <label for="filter-Queer">Queer</label>
-                <input type="checkbox" id="filter-Bisexual" name="filter-Bisexual" checked="">
-                <label for="filter-Bisexual">Bisexual</label>
-                <input type="checkbox" id="filter-Straight" name="filter-Straight" checked="">
+                <input type="checkbox" id="filter-Bi" name="filter-Bi" value="Bi" checked="">
+                <label for="filter-Bi">Bisexual</label>
+                <input type="checkbox" id="filter-Straight" name="filter-Straight" value="Straight" checked="">
                 <label for="filter-Straight">Straight</label>
-                <input type="checkbox" id="filter-Available" name="filter-Available" checked="">
+                <input type="checkbox" id="filter-Available" name="filter-Available" value="Available" checked="">
                 <label for="filter-Available">Available</label>
-                <input type="checkbox" id="filter-Taken" name="filter-Taken" checked="">
+                <input type="checkbox" id="filter-Taken" name="filter-Taken" value="Taken" checked="">
                 <label for="filter-Taken">Taken</label>                
             </div>
         </header>
 
-        <!-- <section id="about">
-            <div class="exit">x</div>
+        <section id="about">
+            <div id="xlink" class="exit">x</div>
+            <hr>
             <p>This is sophies about section. This is sophies about section. This is sophies about section. This is sophies about section.</p>
-        </section> -->
+        </section>
+        <aside id="about-bg"></aside>
         
 
          <section id="people" class="profiles">
@@ -54,30 +57,81 @@
         <script>
 
               //Filtering Checkboxes Code
-              document.addEventListener('DOMContentLoaded', function() {
-                    const toggleCheckbox = document.getElementById('nav-filters');
-                    const divsToToggle = document.querySelectorAll('.Bi, .Taken, .Gay'); // Select all divs with these classes
+                document.addEventListener('DOMContentLoaded', function() {
+                    const checkboxes = document.querySelectorAll('#nav-filters input[type="checkbox"]');
+                    const profs = document.querySelectorAll('.profile-card');
 
-                    toggleCheckbox.addEventListener('change', function() {
-                        if (this.checked) {
-                        divsToToggle.forEach(div => {
-                            div.style.display = 'block'; // Or 'flex', 'grid', etc., depending on desired layout
-                        });
+                    function applyFilters() {
+                    const activeFilters = Array.from(checkboxes)
+                        .filter(cb => cb.checked)
+                        .map(cb => cb.value);
+
+                    profs.forEach(prof => {
+                        // Get the profile's class list as an array
+                        const profClasses = Array.from(prof.classList);
+
+                        // Check if it matches ANY of the active filters
+                        const matches = activeFilters.some(filter => profClasses.includes(filter));
+
+                        // If no filters are checked, show all
+                        if (activeFilters.length === 0 || matches) {
+                            prof.style.display = "block"; // or flex/grid
                         } else {
-                        divsToToggle.forEach(div => {
-                            div.style.display = 'none';
-                        });
+                            prof.style.display = "none";
                         }
                     });
+                }
+
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', applyFilters);
                 });
+
+                // Initial display based on default checkbox states (if any are checked on load)
+                applyFilters();
+            });
+
+
+            document.getElementById('aboutlink').addEventListener('click', function() {
+                var div1 = document.getElementById('about');
+                var div2 = document.getElementById('about-bg');
+
+                // Toggle visibility of div1
+                if (div1.style.display === 'none') {
+                    div1.style.display = 'block';
+                } else {
+                    div1.style.display = 'none';
+                }
+
+                // Toggle visibility of div2
+                if (div2.style.display === 'none') {
+                    div2.style.display = 'block';
+                } else {
+                    div2.style.display = 'none';
+                }
+            });
+
+                document.getElementById('xlink').addEventListener('click', function() {
+                var div1 = document.getElementById('about');
+                var div2 = document.getElementById('about-bg');
+
+                // Toggle visibility of div1
+                if (div1.style.display === 'none') {
+                    div1.style.display = 'block';
+                } else {
+                    div1.style.display = 'none';
+                }
+
+                // Toggle visibility of div2
+                if (div2.style.display === 'none') {
+                    div2.style.display = 'block';
+                } else {
+                    div2.style.display = 'none';
+                }
+            });
 
             const API =
               "https://script.google.com/macros/s/AKfycbyhEg9C9MATypfeNQWdjZXoZznzg-RJHSC6n3J_J6xF7F1UglXf1mSongSI1F9OI2c_-w/exec";
       
-            // // Mapping of profile types to their corresponding section IDs
-            // const TYPE_TO_SECTION = {
-            //   all: "profiles"
-            // };
       
             // Create profile card element
             function createProfileCard(row) {
@@ -90,8 +144,8 @@
                 ["p", { className: "profile-age", textContent: row.Age }],
                 ["p", { className: "profile-orientation", textContent: row.Orientation }],
                 ["p", { className: "profile-pronoun", textContent: row.Pronoun }],
-                ["p", { className: "profile-seeking",  textContent: `I'm looking for... ${row["profile-seeking"]}`, }, ],
                 ["p", { className: "profile-availibility", textContent: row.Availability }],
+                ["p", { className: "profile-seeking",  textContent: `I'm looking for... ${row["profile-seeking"]}`, }, ],
                 ["p", { className: "profile-contact", textContent: `Email → ${row["Contact"]}`, }, ],
               ];
               
@@ -105,18 +159,6 @@
               return div;
             }
       
-            // // Organize profiles into section
-            // function organizeItemsByType() {
-            //   for (const [type, sectionId] of Object.entries(TYPE_TO_SECTION)) {
-            //     const section = document.getElementById(sectionId);
-            //     if (!section) continue;
-      
-            //     const items = document.querySelectorAll(`.item.${type}`);
-            //     for (const item of items) {
-            //       section.appendChild(item);
-            //     }
-            //   }
-            // }
       
             // Main
             fetch(API)

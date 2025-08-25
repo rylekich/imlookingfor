@@ -18,9 +18,14 @@ main {
 
 }
 
-a{
-    text-decoration: none;
-    color: black;
+a, #aboutlink{
+  text-decoration: none;
+  color: red;
+  text-align: center;
+}
+
+a:hover{
+    text-transform: uppercase;
 }
 
 a:hover{
@@ -55,6 +60,11 @@ nav {
 
 #nav-filters {
     text-transform: uppercase;
+    text-align: center;
+}
+
+input[type="checkbox"] {
+  border: 2px solid #FF0000; /* 2px solid red border */
 }
 
 h1{
@@ -62,16 +72,72 @@ h1{
     font-family: 'Olympia';
 }
 
-div.profile-card {
-    margin: 10px;
-    padding: 10px;
-    width: 300px;
-}
 
 p.profile-contact{
     color: red;
+  border: 1px solid red;
+  border-radius: 10px;
+  text-align: center;
+  padding: 5px;
 }
 
 p.profile-contact:hover{
     text-transform: uppercase;
+}
+
+.profile-name{
+    display: inline-block;
+    margin-right: 10px;
+    border-bottom: 1px dotted black;
+    padding: 0.5px;
+    text-transform: uppercase;
+}
+
+.profile-age, .profile-orientation, .profile-pronoun, .profile-availibility{
+    display: inline;
+    margin-right: 10px;
+}
+
+.profile-orientation::after, .profile-pronoun::after, .profile-availibility::after{
+    content: '.';
+}
+
+section#about{
+    width: 350px;
+  height: auto;
+  border: 1px solid #FF0000;
+  color: black;
+  padding: 10px;
+  position: fixed;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: none;
+}
+
+.exit {
+  display: flex;
+  justify-content: end;
+}
+
+aside#about-bg{
+    background-color: #FF0000;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    opacity: 65%;
+    display: none;
+}
+
+
+@media only screen and (max-width: 600px) {
+  h1{
+    font-size: 2em;
+  }
 }
