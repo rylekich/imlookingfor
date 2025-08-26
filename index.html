@@ -16,25 +16,25 @@
                 <div class="nav-link"><a href="https://docs.google.com/forms/d/e/1FAIpQLScubqktVRJgarFkZlDHZNBTv2FiT570SXuylHOjmCznmy71Rg/viewform">submit</a></div>
             </nav>
             <div id="nav-filters">
-                <input type="checkbox" id="filter-She" name="filter-She" value="She" checked="">
+                <input type="checkbox" id="filter-She" name="filter-She" data-target-class="She" >
                 <label for="filter-She">She/Her</label>
-                <input type="checkbox" id="filter-He" name="filter-He" value="He" checked="">
+                <input type="checkbox" id="filter-He" name="filter-He" data-target-class="He" >
                 <label for="filter-He">He/Him</label>
-                <input type="checkbox" id="filter-They" name="filter-They" value="They" checked="">
+                <input type="checkbox" id="filter-They" name="filter-They" data-target-class="They" >
                 <label for="filter-They">They/Them</label>
-                <input type="checkbox" id="filter-Gay" name="filter-Gay" value="Gay" checked="">
+                <input type="checkbox" id="filter-Gay" name="filter-Gay" data-target-class="Gay" >
                 <label for="filter-Gay">Gay</label>
-                <input type="checkbox" id="filter-Lesbian" name="filter-Lesbian" value="Lesbian" checked="">
+                <input type="checkbox" id="filter-Lesbian" name="filter-Lesbian" data-target-class="Lesbian" >
                 <label for="filter-Lesbian">Lesbian</label>
-                <input type="checkbox" id="filter-Queer" name="filter-Queer" value="Queer" checked="">
+                <input type="checkbox" id="filter-Queer" name="filter-Queer" data-target-class="Queer" >
                 <label for="filter-Queer">Queer</label>
-                <input type="checkbox" id="filter-Bi" name="filter-Bi" value="Bi" checked="">
+                <input type="checkbox" id="filter-Bi" name="filter-Bi" data-target-class="Bi" >
                 <label for="filter-Bi">Bisexual</label>
-                <input type="checkbox" id="filter-Straight" name="filter-Straight" value="Straight" checked="">
+                <input type="checkbox" id="filter-Straight" name="filter-Straight" data-target-class="Straight" >
                 <label for="filter-Straight">Straight</label>
-                <input type="checkbox" id="filter-Available" name="filter-Available" value="Available" checked="">
+                <input type="checkbox" id="filter-Available" name="filter-Available" data-target-class="Available" >
                 <label for="filter-Available">Available</label>
-                <input type="checkbox" id="filter-Taken" name="filter-Taken" value="Taken" checked="">
+                <input type="checkbox" id="filter-Taken" name="filter-Taken" data-target-class="Taken" >
                 <label for="filter-Taken">Taken</label>                
             </div>
         </header>
@@ -54,132 +54,121 @@
     </main>
 
 
-        <script>
+<script>
+  // Filtering Checkboxes Code (with AND logic)
+  document.addEventListener('DOMContentLoaded', function() {
+      const checkboxes = document.querySelectorAll('#nav-filters input[type="checkbox"]');
 
-              //Filtering Checkboxes Code
-                document.addEventListener('DOMContentLoaded', function() {
-                    const checkboxes = document.querySelectorAll('#nav-filters input[type="checkbox"]');
-                    const profs = document.querySelectorAll('.profile-card');
+      function applyFilters() {
+          const profiles = document.querySelectorAll('.profile-card');
 
-                    function applyFilters() {
-                    const activeFilters = Array.from(checkboxes)
-                        .filter(cb => cb.checked)
-                        .map(cb => cb.value);
+          // Collect checked filters by category
+          const activeFilters = {
+              pronouns: [],
+              orientations: [],
+              availability: []
+          };
 
-                    profs.forEach(prof => {
-                        // Get the profile's class list as an array
-                        const profClasses = Array.from(prof.classList);
-
-                        // Check if it matches ANY of the active filters
-                        const matches = activeFilters.some(filter => profClasses.includes(filter));
-
-                        // If no filters are checked, show all
-                        if (activeFilters.length === 0 || matches) {
-                            prof.style.display = "block"; // or flex/grid
-                        } else {
-                            prof.style.display = "none";
-                        }
-                    });
-                }
-
-                checkboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', applyFilters);
-                });
-
-                // Initial display based on default checkbox states (if any are checked on load)
-                applyFilters();
-            });
-
-
-            document.getElementById('aboutlink').addEventListener('click', function() {
-                var div1 = document.getElementById('about');
-                var div2 = document.getElementById('about-bg');
-
-                // Toggle visibility of div1
-                if (div1.style.display === 'none') {
-                    div1.style.display = 'block';
-                } else {
-                    div1.style.display = 'none';
-                }
-
-                // Toggle visibility of div2
-                if (div2.style.display === 'none') {
-                    div2.style.display = 'block';
-                } else {
-                    div2.style.display = 'none';
-                }
-            });
-
-                document.getElementById('xlink').addEventListener('click', function() {
-                var div1 = document.getElementById('about');
-                var div2 = document.getElementById('about-bg');
-
-                // Toggle visibility of div1
-                if (div1.style.display === 'none') {
-                    div1.style.display = 'block';
-                } else {
-                    div1.style.display = 'none';
-                }
-
-                // Toggle visibility of div2
-                if (div2.style.display === 'none') {
-                    div2.style.display = 'block';
-                } else {
-                    div2.style.display = 'none';
-                }
-            });
-
-            const API =
-              "https://script.google.com/macros/s/AKfycbyhEg9C9MATypfeNQWdjZXoZznzg-RJHSC6n3J_J6xF7F1UglXf1mSongSI1F9OI2c_-w/exec";
-      
-      
-            // Create profile card element
-            function createProfileCard(row) {
-              const div = document.createElement("div");
-              div.className = `profile-card ${row.Orientations} ${row.Availability}`;
-      
-              const template = [
-                ["img", { src: row.Photo }],
-                ["p", { className: "profile-name", textContent: row.Name }],
-                ["p", { className: "profile-age", textContent: row.Age }],
-                ["p", { className: "profile-orientation", textContent: row.Orientation }],
-                ["p", { className: "profile-pronoun", textContent: row.Pronoun }],
-                ["p", { className: "profile-availibility", textContent: row.Availability }],
-                ["p", { className: "profile-seeking",  textContent: `I'm looking for... ${row["profile-seeking"]}`, }, ],
-                ["p", { className: "profile-contact", textContent: `Email → ${row["Contact"]}`, }, ],
-              ];
-              
-      
-              for (const [tag, props] of template) {
-                const el = document.createElement(tag);
-                Object.assign(el, props);
-                div.appendChild(el);
+          checkboxes.forEach(cb => {
+              if (cb.checked) {
+                  if (["She", "He", "They"].includes(cb.dataset.targetClass)) {
+                      activeFilters.pronouns.push(cb.dataset.targetClass);
+                  }
+                  else if (["Gay", "Lesbian", "Queer", "Bi", "Straight"].includes(cb.dataset.targetClass)) {
+                      activeFilters.orientations.push(cb.dataset.targetClass);
+                  }
+                  else if (["Available", "Taken"].includes(cb.dataset.targetClass)) {
+                      activeFilters.availability.push(cb.dataset.targetClass);
+                  }
               }
-      
-              return div;
-            }
-      
-      
-            // Main
-            fetch(API)
-              .then((res) => res.json())
-              .then(({ data }) => {
-                const container = document.querySelector(".profiles");
-                const fragment = document.createDocumentFragment();
-      
-                for (const row of data[0].children) {
-                  fragment.appendChild(createProfileCard(row));
-                }
-      
-                container.appendChild(fragment);
-                // organizeItemsByType();
-              })
-              .catch((err) => console.error("Error fetching API:", err));
+          });
+
+          profiles.forEach(profile => {
+              const hasPronoun = activeFilters.pronouns.length === 0 || activeFilters.pronouns.some(p => profile.classList.contains(p));
+              const hasOrientation = activeFilters.orientations.length === 0 || activeFilters.orientations.some(o => profile.classList.contains(o));
+              const hasAvailability = activeFilters.availability.length === 0 || activeFilters.availability.some(a => profile.classList.contains(a));
+
+              if (hasPronoun && hasOrientation && hasAvailability) {
+                  profile.style.display = 'block';
+              } else {
+                  profile.style.display = 'none';
+              }
+          });
+      }
+
+      checkboxes.forEach(cb => {
+          cb.addEventListener('change', applyFilters);
+      });
+
+      // Run once on load
+      applyFilters();
+  });
+
+  // About modal toggle
+  document.getElementById('aboutlink').addEventListener('click', function() {
+      var div1 = document.getElementById('about');
+      var div2 = document.getElementById('about-bg');
+
+      div1.style.display = (div1.style.display === 'none' || !div1.style.display) ? 'block' : 'none';
+      div2.style.display = (div2.style.display === 'none' || !div2.style.display) ? 'block' : 'none';
+  });
+
+  document.getElementById('xlink').addEventListener('click', function() {
+      var div1 = document.getElementById('about');
+      var div2 = document.getElementById('about-bg');
+
+      div1.style.display = (div1.style.display === 'none' || !div1.style.display) ? 'block' : 'none';
+      div2.style.display = (div2.style.display === 'none' || !div2.style.display) ? 'block' : 'none';
+  });
+
+  const API =
+    "https://script.google.com/macros/s/AKfycbyhEg9C9MATypfeNQWdjZXoZznzg-RJHSC6n3J_J6xF7F1UglXf1mSongSI1F9OI2c_-w/exec";
+
+  // Create profile card element
+  function createProfileCard(row) {
+    const div = document.createElement("div");
+    div.className = `profile-card ${row.Orientations} ${row.Pronouns} ${row.Availability}`;
+
+    const template = [
+      ["img", { src: row.Photo }],
+      ["p", { className: "profile-name", textContent: row.Name }],
+      ["p", { className: "profile-age", textContent: row.Age }],
+      ["p", { className: "profile-orientation", textContent: row.Orientation }],
+      ["p", { className: "profile-pronoun", textContent: row.Pronoun }],
+      ["p", { className: "profile-availibility", textContent: row.Availability }],
+      ["p", { className: "profile-seeking",  textContent: `I'm looking for... ${row["profile-seeking"]}`, }, ],
+     ["a", { className: "profile-contact", href: `mailto:${row["Contact"]}`, textContent: `Contact →` }],
+];
+
+    for (const [tag, props] of template) {
+      const el = document.createElement(tag);
+      Object.assign(el, props);
+      div.appendChild(el);
+    }
+
+    return div;
+  }
+
+  // Main
+  fetch(API)
+    .then((res) => res.json())
+    .then(({ data }) => {
+      const container = document.querySelector(".profiles");
+      const fragment = document.createDocumentFragment();
+
+      for (const row of data[0].children) {
+        fragment.appendChild(createProfileCard(row));
+      }
+
+      container.appendChild(fragment);
+
+      // ✅ re-run checkbox logic after profiles load
+      document.querySelectorAll('#nav-filters input[type="checkbox"]')[0].dispatchEvent(new Event('change'));
+    })
+    .catch((err) => console.error("Error fetching API:", err));
+</script>
 
 
-
-              
-          </script>
 
 </body>
 </html>

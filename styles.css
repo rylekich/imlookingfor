@@ -22,15 +22,15 @@ a, #aboutlink{
   text-decoration: none;
   color: red;
   text-align: center;
+  cursor: pointer;
+
 }
 
 a:hover{
     text-transform: uppercase;
-}
-
-a:hover{
-    color: red;
     cursor: pointer;
+        color: red;
+
 }
 
 section#people{
@@ -74,16 +74,19 @@ h1{
 }
 
 
-p.profile-contact{
-    color: red;
+.profile-contact{
+  color: red;
   border: 1px solid red;
   border-radius: 10px;
   text-align: center;
   padding: 5px;
+  cursor: pointer;
+ 
 }
 
 p.profile-contact:hover{
     text-transform: uppercase;
+     cursor: pointer;
 }
 
 .profile-name{
