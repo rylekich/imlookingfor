@@ -139,6 +139,20 @@ aside#about-bg{
     display: none;
 }
 
+.Taken{
+    position: relative;
+}
+
+.Taken::before{
+content: '♡' ;
+color: red;
+font-size: 4em;
+position: absolute;
+top: 50px;
+left: 50px;
+transform: translate(-50%, -50%);
+}
+
 
 @media only screen and (max-width: 600px) {
   h1{
