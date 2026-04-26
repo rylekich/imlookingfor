@@ -43,6 +43,7 @@ section#people{
 
 img {
     width: 100%;
+    margin-bottom: 10px;
 }
 
 header {
@@ -90,7 +91,7 @@ p.profile-contact:hover{
 }
 
 .profile-name{
-    display: inline-block;
+    display: inline;
     margin-right: 10px;
     border-bottom: 1px dotted black;
     padding: 0.5px;
