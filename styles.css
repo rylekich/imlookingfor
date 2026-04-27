@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 @font-face {
   font-family: 'Olympia';
   src: url(OlympiaScript.ttf);
@@ -73,6 +79,13 @@ h1{
     font-family: 'Olympia';
 }
 
+.profile-card {
+  min-width: 0;
+  width: 100%;
+  margin: 5px 0;
+}
+
+
 
 .profile-contact{
   color: red;
@@ -90,17 +103,32 @@ p.profile-contact:hover{
 }
 
 .profile-name{
-    display: inline;
-    margin-right: 10px;
+    /* display: inline; */
+    /* margin-right: 10px; */
     border-bottom: 1px dotted black;
-    padding: 0.5px;
+    /* padding: 0.5px; */
     text-transform: uppercase;
 }
 
+.profile-meta p {
+    margin: 0 1px;
+}
+
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+p.profile-seeking{
+   margin: 15px 0;
+}
+
+/* 
 .profile-age, .profile-orientation, .profile-pronoun, .profile-availibility{
     display: inline;
     margin-right: 10px;
-}
+} */
 
 .profile-orientation::after, .profile-pronoun::after, .profile-availibility::after{
     content: '.';

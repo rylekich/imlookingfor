@@ -46,7 +46,7 @@
         <section id="about">
             <div id="xlink" class="exit">x</div>
             <hr>
-            <p><i>I’m Looking For...</i> explores dating, connection, and loneliness in New York City. In 2025, Sophie Joseph Schwartz offered portrait sessions with the clear intention of use on dating and hookup apps. Before each session they asked participants to fill out an extensive questionnaire with questions like: <i>what are you looking for on these apps and who are you trying to attract?</i> and <i>what do you find attractive in other people’s photos?</i> In these sessions, Schwartz acted as a more passive director, letting participants choose the location and lead the direction of the images, creating space for them to perform their version of seduction. In exchange for the images, participants sent screenshots of the images on their profiles and how potential dates interacted with the images.</p>
+            <p><i>I’m Looking For...</i> explores dating, connection, and loneliness in New York City. In 2025, <a href="https://www.sophie-schwartz.com/" target="_blank">Sophie Joseph Schwartz</a> offered portrait sessions with the clear intention of use on dating and hookup apps. Before each session they asked participants to fill out an extensive questionnaire with questions like: <i>what are you looking for on these apps and who are you trying to attract?</i> and <i>what do you find attractive in other people’s photos?</i> In these sessions, Schwartz acted as a more passive director, letting participants choose the location and lead the direction of the images, creating space for them to perform their version of seduction. In exchange for the images, participants sent screenshots of the images on their profiles and how potential dates interacted with the images.</p>
         </section>
         <aside id="about-bg"></aside>
         
@@ -129,29 +129,46 @@
     "https://script.google.com/macros/s/AKfycbyhEg9C9MATypfeNQWdjZXoZznzg-RJHSC6n3J_J6xF7F1UglXf1mSongSI1F9OI2c_-w/exec";
 
   // Create profile card element
-  function createProfileCard(row) {
-    const div = document.createElement("div");
-    div.className = `profile-card ${row.Orientations} ${row.Pronouns} ${row.Availability}`;
+ function createProfileCard(row) {
+  const div = document.createElement("div");
+  div.className = `profile-card ${row.Orientations} ${row.Pronouns} ${row.Availability}`;
 
-    const template = [
-      ["img", { src: row.Photo }],
-      ["p", { className: "profile-name", textContent: row.Name }],
-      ["p", { className: "profile-age", textContent: row.Age }],
-      ["p", { className: "profile-orientation", textContent: row.Orientation }],
-      ["p", { className: "profile-pronoun", textContent: row.Pronoun }],
-      ["p", { className: "profile-availibility", textContent: row.Availability }],
-      ["p", { className: "profile-seeking",  textContent: `I'm looking for... ${row["profile-seeking"]}`, }, ],
-     ["a", { className: "profile-contact", href: `mailto:${row["Contact"]}`, textContent: `Contact →` }],
-];
+  const template = [
+    ["img", { src: row.Photo }],
+    [
+      "div", 
+      { className: "profile-meta" }, 
+      [
+        ["p", { className: "profile-name", textContent: row.Name }],
+        ["p", { className: "profile-age", textContent: row.Age }],
+        ["p", { className: "profile-orientation", textContent: row.Orientation }],
+        ["p", { className: "profile-pronoun", textContent: row.Pronoun }],
+        ["p", { className: "profile-availibility", textContent: row.Availability }],
+        ["p", { className: "profile-seeking", textContent: `I'm looking for... ${row["profile-seeking"]}` }],
+      ]
+    ],
+    ["a", { className: "profile-contact", href: `mailto:${row["Contact"]}`, textContent: "Contact →" }],
+  ];
 
-    for (const [tag, props] of template) {
-      const el = document.createElement(tag);
-      Object.assign(el, props);
-      div.appendChild(el);
+  // This loop now handles the 3rd index (children)
+  for (const [tag, props, children] of template) {
+    const el = document.createElement(tag);
+    Object.assign(el, props);
+
+    // If there's a third item in the array, loop through it to add children
+    if (children && Array.isArray(children)) {
+      for (const [childTag, childProps] of children) {
+        const childEl = document.createElement(childTag);
+        Object.assign(childEl, childProps);
+        el.appendChild(childEl);
+      }
     }
 
-    return div;
+    div.appendChild(el);
   }
+
+  return div;
+}
 
   // Main
   fetch(API)
